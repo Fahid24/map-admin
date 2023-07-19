@@ -5,7 +5,8 @@ import ModeratorRow from "../components/ModeratorRow";
 
 const AddData = () => {
   const [data, setData] = useState();
-  // console.log(data);
+  const [Loading, setLoading] = useState(false);
+
   const docRef = collection(db, "from-data");
 
   useEffect(() => {
@@ -16,17 +17,24 @@ const AddData = () => {
       }));
       setData(newData);
     });
-  }, [docRef]);
-
+  }, []);
+  if (!data || Loading) {
+    return (
+      <p className="text-2xl  text-center font-semibold mx-auto my-[50vh]">
+        Loading...
+      </p>
+    );
+  }
   return (
     <>
-      <section className="p-5  text-2xl font-semibold text-center text-accent">
-        Total Members: {data?.length}
-        <p className="mt-1 text-sm text-center font-normal text-gray-500 dark:text-gray-400">
-          Browse a list of Flowbite products designed to help you work and play,
-          stay organized, get answers, keep in touch, grow your business, and
-          more.
-        </p>
+      <section className="   font-semibold text-center text-accent">
+        <h2 className="p-5 text-3xl text-orange-500">
+          Marathi Association Perth
+        </h2>
+        <h2 className=" text-2xl p-5 text-accent">
+          {" "}
+          Total Members: {data?.length}
+        </h2>{" "}
       </section>
       <section className="lg:max-w-6xl mx-auto overflow-x-auto">
         <table className="table rounded-0 w-full">
@@ -39,17 +47,24 @@ const AddData = () => {
               <th>Name</th>
               <th>Package</th>
               <th>Details</th>
+              <th>Delete</th>
             </tr>
           </thead>
           {/* table data */}
           <tbody className=" flex-col-reverse">
             {Array.isArray(data)
               ? data?.map((member, index) => (
-                  <ModeratorRow key={index} index={index} member={member} />
+                  <ModeratorRow
+                    setLoading={setLoading}
+                    key={index}
+                    index={index}
+                    member={member}
+                  />
                 ))
               : null}
           </tbody>
         </table>
+        {/* <DeleteModal /> */}
       </section>
     </>
   );

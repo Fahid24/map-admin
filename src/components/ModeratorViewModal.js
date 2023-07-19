@@ -31,12 +31,21 @@ const ModeratorViewModal = ({
   spouseAddress,
   spouseName,
 }) => {
+  if (!id) {
+    return <p className="text-4xl text-center mx-auto my-auto">Loading...</p>;
+  }
   return (
     <>
       {/* Put this part before </body> tag */}
       <input type="checkbox" id={id} className="modal-toggle" />
       <label htmlFor={id} className="modal cursor-pointer">
         <label className="modal-box relative" htmlFor="">
+          <label
+            htmlFor={id}
+            className="btn btn-sm sticky hover:text-white  btn-circle bg-white text-black font-bold text-md  z-10 left-[100%] top-2"
+          >
+            ✕
+          </label>
           <h3 className="text-xl font-bold">
             Date: <span className="text-lg font-semibold">{date}</span>
           </h3>
